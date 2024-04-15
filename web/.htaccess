@@ -1,0 +1,17 @@
+RewriteEngine on
+
+RewriteBase /ro/
+
+# prevent httpd from serving dotfiles (.htaccess, .svn, .git, etc.)
+RedirectMatch 403 /\..*$
+
+# prevents looping by checking an internal mod_rewrite variable REDIRECT_STATUS which is set to 200 after first successful internal redirect.
+#RewriteCond %{ENV:REDIRECT_STATUS} ^$
+
+# if a directory or a file exists, use it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# otherwise forward it to index.php
+#RewriteRule ^(.*)$ index.php?/$1 [L]
+RewriteRule . index.php
